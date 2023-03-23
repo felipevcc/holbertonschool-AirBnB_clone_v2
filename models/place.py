@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Place Module for HBNB project"""
-from models import storage
+import models
 from models.base_model import BaseModel, Base
 from models.review import Review
 from models.amenity import Amenity
@@ -39,7 +39,7 @@ class Place(BaseModel, Base):
         def reviews(self):
             """Getter for the review class"""
             reviews_list = []
-            for review_obj in storage.all(Review).values():
+            for review_obj in models.storage.all(Review).values():
                 if self.id == review_obj.place_id:
                     reviews_list.append(review_obj)
             return reviews_list
@@ -48,7 +48,7 @@ class Place(BaseModel, Base):
         def amenities(self):
             """Getter for the amenity class"""
             amenities_list = []
-            for amenity_obj in storage.all(Amenity).values():
+            for amenity_obj in models.storage.all(Amenity).values():
                 if amenity_obj.id in amenities_list:
                     amenities_list.append(amenity_obj)
             return amenities_list

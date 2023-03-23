@@ -59,7 +59,6 @@ class FileStorage:
         """Deletes an object"""
         if not obj:
             return
-        dict_copy = {k: v for k, v in FileStorage.__objects.items()}
-        for k, v in dict_copy.items():
-            if v == obj:
-                del FileStorage.__objects[k]
+        obj_key = f"{obj.__class__.__name__}.{obj.id}"
+        if obj_key in FileStorage.__objects:
+            del FileStorage.__objects[obj_key]

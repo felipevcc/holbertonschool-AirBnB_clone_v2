@@ -3,7 +3,7 @@
 import cmd
 import sys
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         new_instance = HBNBCommand.classes[classname]()
-        storage.save()
+        new_instance.save()
         print(new_instance.id)
 
         # Divides parameters and values finding '='
@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
                 continue
             delimiter = new_attr.find("=")
             attr = new_attr[:delimiter]
-            value = new_attr[delimiter+1:]
+            value = new_attr[delimiter+1:].replace("_", " ")
             update_line = [classname, new_instance.id, attr, value]
             update_line = ' '.join(update_line)
             # Use 'update' function to add attributes to the new object
