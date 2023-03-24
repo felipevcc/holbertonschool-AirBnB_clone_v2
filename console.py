@@ -16,8 +16,7 @@ class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
 
     # determines prompt for interactive/non-interactive modes
-    prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
-
+    prompt = '(hbnb) '
     classes = {
                'BaseModel': BaseModel, 'User': User, 'Place': Place,
                'State': State, 'City': City, 'Amenity': Amenity,
@@ -29,11 +28,6 @@ class HBNBCommand(cmd.Cmd):
              'max_guest': int, 'price_by_night': int,
              'latitude': float, 'longitude': float
             }
-
-    def preloop(self):
-        """Prints if isatty is false"""
-        if not sys.__stdin__.isatty():
-            print('(hbnb)')
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
@@ -86,12 +80,6 @@ class HBNBCommand(cmd.Cmd):
         finally:
             return line
 
-    def postcmd(self, stop, line):
-        """Prints if isatty is false"""
-        if not sys.__stdin__.isatty():
-            print('(hbnb) ', end='')
-        return stop
-
     def do_quit(self, command):
         """ Method to exit the HBNB console"""
         exit()
@@ -125,21 +113,21 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        new_instance = HBNBCommand.classes[classname]()
+        kwargs = {}
+        for attr in line:
+            # Divides keys and values by '='
+            key, value = attr.split("=", 1)
+            if value[0] == '"':
+                value = value.replace("_", " ").replace("\"", "")
+            elif "." in value:
+                value = float(value)
+            else:
+                value = int(value)
+            kwargs[key] = value
+
+        new_instance = HBNBCommand.classes[classname](**kwargs)
         new_instance.save()
         print(new_instance.id)
-
-        # Divides parameters and values finding '='
-        for new_attr in line:
-            if "=" not in new_attr:
-                continue
-            delimiter = new_attr.find("=")
-            attr = new_attr[:delimiter]
-            value = new_attr[delimiter+1:].replace("_", " ")
-            update_line = [classname, new_instance.id, attr, value]
-            update_line = ' '.join(update_line)
-            # Use 'update' function to add attributes to the new object
-            self.do_update(update_line)
 
     def help_create(self):
         """ Help information for the create method """
@@ -170,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
 
         key = c_name + "." + c_id
         try:
-            print(storage._FileStorage__objects[key])
+            print(storage.all()[key])
         except KeyError:
             print("** no instance found **")
 
@@ -221,11 +209,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
@@ -238,7 +226,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count current number of class instances"""
         count = 0
-        for k, v in storage._FileStorage__objects.items():
+        for k, v in storage.all().items():
             if args == k.split('.')[0]:
                 count += 1
         print(count)
@@ -334,6 +322,7 @@ class HBNBCommand(cmd.Cmd):
         """Help information for the update class"""
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

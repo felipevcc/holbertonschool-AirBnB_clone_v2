@@ -19,13 +19,14 @@ class DBStorage:
 
     def __init__(self):
         """Constructor that creates a new instance"""
-        user = getenv('HBNB_MYSQL_USER')
-        password = getenv('HBNB_MYSQL_PWD')
-        database = getenv('HBNB_MYSQL_HOST')
-        host = getenv('HBNB_MYSQL_DB')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+        user = getenv("HBNB_MYSQL_USER")
+        password = getenv("HBNB_MYSQL_PWD")
+        host = getenv("HBNB_MYSQL_HOST")
+        database = getenv("HBNB_MYSQL_DB")
+        env = getenv("HBNB_ENV")
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(
                         user, password, host, database), pool_pre_ping=True)
-        if getenv('HBNB_ENV') == 'test':
+        if env == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -56,6 +57,7 @@ class DBStorage:
     def reload(self):
         """Creates all tables and starts the current session"""
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()

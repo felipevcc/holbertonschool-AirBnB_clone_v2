@@ -32,7 +32,7 @@ class BaseModel:
         dictionary = self.__dict__.copy()
         dictionary.pop("_sa_instance_state", None)
         cls = self.__class__.__name__
-        return '[{}] ({}) {}'.format(cls, self.id, dictionary)
+        return "[{}] ({}) {}".format(cls, self.id, dictionary)
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
@@ -45,12 +45,12 @@ class BaseModel:
         """Convert instance into dict format"""
         dictionary = {}
         dictionary.update(self.__dict__)
-        dictionary['__class__'] = self.__class__.__name__
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
-        dictionary.pop('_sa_instance_state', None)
+        dictionary["__class__"] = self.__class__.__name__
+        dictionary["created_at"] = self.created_at.isoformat()
+        dictionary["updated_at"] = self.updated_at.isoformat()
+        dictionary.pop("_sa_instance_state", None)
         return dictionary
-    
+
     def delete(self):
         """Deletes the current instance from the storage"""
         from models import storage
