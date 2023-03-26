@@ -1,8 +1,10 @@
 #!/usr/bin/python3
-""" Module for testing file storage"""
+""" Module for testing file storage """
 import unittest
+from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models import storage
+import pycodestyle
 import os
 
 
@@ -12,10 +14,10 @@ class test_fileStorage(unittest.TestCase):
     def setUp(self):
         """ Set up test environment """
         del_list = []
-        for key in storage._FileStorage__objects.keys():
+        for key in storage.all().keys():
             del_list.append(key)
         for key in del_list:
-            del storage._FileStorage__objects[key]
+            del storage.all()[key]
 
     def tearDown(self):
         """ Remove storage file at end of tests """
@@ -107,3 +109,26 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+
+class TestFileStoragePEP8(unittest.TestCase):
+    """ Test cases for the doc and style of FileStorage class """
+
+    def test_pep8(self):
+        """ Test for pycodestyle """
+        pep8style = pycodestyle.StyleGuide(quiet=True)
+        result = pep8style.check_files(["models/engine/file_storage.py"])
+        self.assertEqual(result.total_errors, 0, "pycodestyle failed")
+
+    def test_docs(self):
+        """ Test for doc in FileStorage methods """
+        methods = [
+            "__doc__",
+            "__init__.__doc__",
+            "all.__doc__",
+            "new.__doc__",
+            "save.__doc__",
+            "reload.__doc__",
+            "delete.__doc__"]
+        for method in methods:
+            self.assertIsNotNone(getattr(FileStorage, method))
