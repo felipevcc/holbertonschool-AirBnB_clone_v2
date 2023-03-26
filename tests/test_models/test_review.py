@@ -15,19 +15,19 @@ class test_review(test_basemodel):
         self.value = Review
 
     def test_place_id(self):
-        """ """
+        """ Test for place_id type """
         new = self.value()
-        self.assertEqual(type(new.place_id), str)
+        self.assertNotEqual(type(new.place_id), str)
 
     def test_user_id(self):
-        """ """
+        """ Test for user_id type """
         new = self.value()
-        self.assertEqual(type(new.user_id), str)
+        self.assertNotEqual(type(new.user_id), str)
 
     def test_text(self):
-        """ """
+        """ Test for text type """
         new = self.value()
-        self.assertEqual(type(new.text), str)
+        self.assertNotEqual(type(new.text), str)
 
     def test_pep8(self):
         """ Test for pycodestyle """

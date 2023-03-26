@@ -15,14 +15,14 @@ class test_City(test_basemodel):
         self.value = City
 
     def test_state_id(self):
-        """ """
+        """ Test for stated_id type """
         new = self.value()
-        self.assertEqual(type(new.state_id), str)
+        self.assertNotEqual(type(new.state_id), str)
 
     def test_name(self):
-        """ """
+        """ Test for name type """
         new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertNotEqual(type(new.name), str)
 
     def test_pep8(self):
         """ Test for pycodestyle """

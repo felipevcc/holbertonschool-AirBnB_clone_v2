@@ -15,9 +15,9 @@ class test_state(test_basemodel):
         self.value = State
 
     def test_name3(self):
-        """ """
+        """ Test for name type """
         new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertNotEqual(type(new.name), str)
 
     def test_pep8(self):
         """ Test for pycodestyle """

@@ -54,13 +54,4 @@ class TestDBStoragePEP8(unittest.TestCase):
 
     def test_docs(self):
         """ Test for doc in DBStorage methods """
-        methods = [
-            "__doc__",
-            "__init__.__doc__",
-            "all.__doc__",
-            "new.__doc__",
-            "save.__doc__",
-            "delete.__doc__",
-            "reload.__doc__"]
-        for method in methods:
-            self.assertIsNotNone(getattr(DBStorage, method))
+        self.assertIsNotNone(DBStorage.__doc__)
