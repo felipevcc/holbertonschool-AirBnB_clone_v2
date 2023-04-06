@@ -17,7 +17,7 @@
 
 This repository contains version 2 of a project to build a clone of the AirBnB website. This version implements a back-end interface, or console, to manage program data. Console commands allow the user to create, update, and destroy objects, as well as manage file storage, using a JSON serialization system or using MySQL as the database.
 
-<img src="https://i.imgur.com/4H442BZ.png" alt="Structure">
+<img src="https://i.imgur.com/lWrO3QE.png" alt="Structure">
 
 ---
 
