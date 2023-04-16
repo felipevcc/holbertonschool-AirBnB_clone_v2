@@ -13,13 +13,11 @@ article {
 	flex-wrap: wrap;
 	flex-direction: row;
 	align-content: flex-start;
-
 	padding-top: 10px;
 	padding-right: 20px;
 	padding-left: 20px;
 	padding-bottom: 20px;
 	margin: 20px;
-
 	border: 1px solid #FF5A5F;
 	border-radius: 4px;
 }
@@ -28,7 +26,6 @@ article {
 	display: flex;
 	flex-direction: row;
 	position: relative;
-
 	height: 80px;	
 	width: 100%;
 }
@@ -37,10 +34,8 @@ article {
 	display: flex;
 	justify-content: center;
 	align-self: flex-end;
-
 	position: absolute;
 	right: 0;
-
 	line-height: 60px;
 	color: #FF5A5F;
 	font-size: 30px;
@@ -58,7 +53,6 @@ article {
 	width: 100%;
 	border-top: 1px solid #DDDDDD;
 	border-bottom: 1px solid #DDDDDD;
-
 	padding-top: 5px;
 	padding-bottom: 12px;
 	margin-top: 10px;
